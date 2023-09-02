@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class TodoController {
                 content = { @Content(mediaType = "application/json")})})
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Todo> createTodo(@RequestBody RequestTodoCreate request){
+    public ResponseEntity<Todo> createTodo(@Valid @RequestBody RequestTodoCreate request){
         todoService.createTodo(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -97,7 +98,7 @@ public class TodoController {
                     content = @Content)})
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Todo> editTodo(@RequestBody RequestTodoEdit request){
+    public ResponseEntity<Todo> editTodo(@Valid @RequestBody RequestTodoEdit request){
         try{
             Todo todo = todoService.editTodo(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(todo);
