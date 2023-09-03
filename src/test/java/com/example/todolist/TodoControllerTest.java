@@ -1,10 +1,12 @@
 package com.example.todolist;
 
+import com.example.todolist.dao.Todo;
 import com.example.todolist.dto.RequestTodoEditDto;
 import com.example.todolist.service.TodoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,6 +30,35 @@ class TodoControllerTest {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
+    @Test
+    void getTodosSuccessTest(){
+        Assertions.assertDoesNotThrow(()->{
+            var res = mockMvc.perform(get("/api/v1/todos")
+                    .contentType(MediaType.APPLICATION_JSON)
+            ).andExpect(status().isOk()).andReturn();
+        });
+    }
+
+    @Test
+    void getTodoByIdSuccessTest(){
+
+        Assertions.assertDoesNotThrow(()->{
+            Mockito.when(todoService.getTodoById(Mockito.any())).thenReturn(getCompleteTodo());
+            var res = mockMvc.perform(get("/api/v1/todos/2")
+                    .contentType(MediaType.APPLICATION_JSON)
+            ).andExpect(status().isOk()).andReturn();
+        });
+    }
+
+    @Test
+    void getTodoByIdFailTest(){
+        Assertions.assertDoesNotThrow(()->{
+            Mockito.when(todoService.getTodoById(Mockito.any())).thenReturn(null);
+            var res = mockMvc.perform(get("/api/v1/todos/0")
+                    .contentType(MediaType.APPLICATION_JSON)
+            ).andExpect(status().is4xxClientError()).andReturn();
+        });
+    }
     @Test
     void getTodoByValidStatusTest(){
         Assertions.assertDoesNotThrow(()->{
@@ -80,6 +111,11 @@ class TodoControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
             ).andExpect(status().is4xxClientError()).andReturn();
         });
+    }
+
+    private Todo getCompleteTodo(){
+        Todo todo = new Todo();
+        return todo;
     }
 
 }

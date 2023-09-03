@@ -61,11 +61,17 @@ public class TodoController {
     @Operation(summary = "Get todo by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Get todos success",
-                    content = { @Content(mediaType = "application/json")})})
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Todo not found",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Todo> getTodoById(@Parameter(description = "id of todo") @PathVariable Integer id){
         Todo todo = todoService.getTodoById(id);
+        if(todo == null){
+            throw new TodoNotFoundException("todo not found");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(todo);
     }
 
@@ -101,7 +107,7 @@ public class TodoController {
             @ApiResponse(responseCode = "200", description = "Get todos success",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Todo.class))}),
-            @ApiResponse(responseCode = "404", description = "Todo not found, cant edit",
+            @ApiResponse(responseCode = "404", description = "Todo not found, can't edit",
                     content = @Content)})
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
