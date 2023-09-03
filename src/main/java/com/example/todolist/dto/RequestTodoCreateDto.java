@@ -1,4 +1,4 @@
-package com.example.todolist.requestValid;
+package com.example.todolist.dto;
 
 
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RequestTodoCreate {
+public class RequestTodoCreateDto {
 
     @NotNull @Size(min = 2,max = 255)
     private String message;

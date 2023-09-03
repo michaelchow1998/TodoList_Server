@@ -4,8 +4,8 @@ import com.example.todolist.Enum.Status;
 import com.example.todolist.dao.Todo;
 import com.example.todolist.exception.customException.StatusNotMatchException;
 import com.example.todolist.exception.customException.TodoNotFoundException;
-import com.example.todolist.requestValid.RequestTodoCreate;
-import com.example.todolist.requestValid.RequestTodoEdit;
+import com.example.todolist.dto.RequestTodoCreateDto;
+import com.example.todolist.dto.RequestTodoEditDto;
 import com.example.todolist.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -45,7 +45,7 @@ public class TodoController {
                 content = { @Content(mediaType = "application/json")})})
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Todo> createTodo(@Valid @RequestBody RequestTodoCreate request){
+    public ResponseEntity<Todo> createTodo(@Valid @RequestBody RequestTodoCreateDto request){
         todoService.createTodo(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -76,7 +76,7 @@ public class TodoController {
                     schema = @Schema(implementation = Todo.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid status",
                     content = @Content)})
-    @GetMapping("byStatus")
+    @GetMapping("/byStatus")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ArrayList<Todo>> getTodosByStatus(
             @RequestParam("status") @Parameter(
@@ -105,7 +105,7 @@ public class TodoController {
                     content = @Content)})
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Todo> editTodo(@Valid @RequestBody RequestTodoEdit request){
+    public ResponseEntity<Todo> editTodo(@Valid @RequestBody RequestTodoEditDto request){
         try{
             Todo todo = todoService.editTodo(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(todo);

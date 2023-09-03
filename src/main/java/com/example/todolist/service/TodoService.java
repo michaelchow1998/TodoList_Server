@@ -3,8 +3,8 @@ package com.example.todolist.service;
 
 import com.example.todolist.Enum.Status;
 import com.example.todolist.dao.Todo;
-import com.example.todolist.requestValid.RequestTodoCreate;
-import com.example.todolist.requestValid.RequestTodoEdit;
+import com.example.todolist.dto.RequestTodoCreateDto;
+import com.example.todolist.dto.RequestTodoEditDto;
 import com.example.todolist.repo.TodoRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class TodoService {
         this.todoRepo = todoRepo;
     }
 
-    public void createTodo(RequestTodoCreate request){
+    public void createTodo(RequestTodoCreateDto request){
         Date now = new Date();
 
         Todo todo = new Todo();
@@ -50,7 +50,7 @@ public class TodoService {
         return todoRepo.findTodosByStatus(status);
     }
 
-    public Todo editTodo(RequestTodoEdit requestTodoEdit){
+    public Todo editTodo(RequestTodoEditDto requestTodoEdit){
         Todo todo = todoRepo.findTodoById(requestTodoEdit.getId());
         todo.setMessage(requestTodoEdit.getMessage());
         todo.setStatus(requestTodoEdit.getStatus());

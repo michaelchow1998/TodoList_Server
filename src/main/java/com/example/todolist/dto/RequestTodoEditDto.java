@@ -1,4 +1,4 @@
-package com.example.todolist.requestValid;
+package com.example.todolist.dto;
 
 import com.example.todolist.Enum.Status;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RequestTodoEdit {
+public class RequestTodoEditDto {
 
     @NotNull
     private Integer id;
