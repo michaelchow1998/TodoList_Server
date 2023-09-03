@@ -78,7 +78,14 @@ public class TodoController {
                     content = @Content)})
     @GetMapping("byStatus")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ArrayList<Todo>> getTodosByStatus(@RequestParam("status") String statusString){
+    public ResponseEntity<ArrayList<Todo>> getTodosByStatus(
+            @RequestParam("status") @Parameter(
+                    name ="status",
+                    schema = @Schema(description = "todo status",
+                            type = "string",
+                            allowableValues = {"DONE", "PROCESSING", "PENDING", "DELETED"})
+            )
+            String statusString){
         try{
             Status status = Status.valueOf(statusString);
             ArrayList<Todo> todos = todoService.getTodosByStatus(status);
