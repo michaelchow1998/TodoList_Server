@@ -17,6 +17,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -53,8 +56,21 @@ public class TodoController {
     @Operation(summary = "Get all todos")
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ArrayList<Todo>> getTodos(){
-        ArrayList<Todo> todos = todoService.getAllTodos();
+    public ResponseEntity<Page<Todo>> getTodos(
+            @RequestParam(defaultValue = "0") @Parameter(
+            name ="page",
+            schema = @Schema(description = "todos page",
+                    type = "int"
+            )
+    ) int page,
+            @RequestParam(defaultValue = "10") @Parameter(
+            name ="size",
+            schema = @Schema(description = "todos page size",
+                    type = "int"
+            )
+    ) int size) {
+        PageRequest pageable = PageRequest.of(page, size, Sort.by("id"));
+        Page<Todo> todos = todoService.getAllTodos(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(todos);
     }
 
