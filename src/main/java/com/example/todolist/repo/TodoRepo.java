@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public interface TodoRepo extends JpaRepository<Todo, Integer> {
 
+    boolean existsById(Integer id);
+
     Todo findTodoById(Integer id);
 
     ArrayList<Todo> findTodosByStatus(Status status);

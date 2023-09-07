@@ -5,10 +5,12 @@ import com.example.todolist.Enum.Status;
 import com.example.todolist.dao.Todo;
 import com.example.todolist.dto.RequestTodoCreateDto;
 import com.example.todolist.dto.RequestTodoEditDto;
+import com.example.todolist.exception.customException.TodoNotFoundException;
 import com.example.todolist.repo.TodoRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -62,8 +64,13 @@ public class TodoService {
 
 
     public void deleteTodoById(Integer id){
+        boolean idExist = todoRepo.existsById(id);
+        if(!idExist){
+            throw new TodoNotFoundException("Todo id not found");
+        }
         Todo todo = todoRepo.findTodoById(id);
         todoRepo.delete(todo);
+
     }
 
 

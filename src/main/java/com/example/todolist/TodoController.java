@@ -145,5 +145,6 @@ public class TodoController {
     public ResponseEntity<String> deleteTodoById(@Parameter(description = "id of todo")  @PathVariable Integer id){
         todoService.deleteTodoById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Todo delete success");
+
     }
 }
