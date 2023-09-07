@@ -48,9 +48,9 @@ public class TodoController {
                 content = { @Content(mediaType = "application/json")})})
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Todo> createTodo(@Valid @RequestBody RequestTodoCreateDto request){
+    public ResponseEntity<String> createTodo(@Valid @RequestBody RequestTodoCreateDto request){
         todoService.createTodo(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Todo create success");
     }
 
     @Operation(summary = "Get all todos")
@@ -142,8 +142,8 @@ public class TodoController {
                     content = { @Content(mediaType = "application/json")})})
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Todo> deleteTodoById(@Parameter(description = "id of todo")  @PathVariable Integer id){
+    public ResponseEntity<String> deleteTodoById(@Parameter(description = "id of todo")  @PathVariable Integer id){
         todoService.deleteTodoById(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body("Todo delete success");
     }
 }

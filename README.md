@@ -1,56 +1,19 @@
 # TodoList API
 
 ## How to setup the application
-1. create a table in mysql named todo_list
-2. modify application.properties 
-   1. enter your mysql username 
-   2. enter your mysql pw
-   3. enter your table name in spring.datasource.url in <table_name>
-      1. e.g mysql://localhost:3306/table_name to mysql://localhost:3306/todo_list
+1. Install Docker Desktop
+2. run ```docker-compose up```
 
-```yaml
-spring.jpa.generate-ddl=true
-spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=jdbc:mysql://localhost:3306/todo_list?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-spring.datasource.username=
-spring.datasource.password=
-spring.datasource.driverClassName=com.mysql.cj.jdbc.Driver
+## How to close the application 
+1. ```docker-compose down```
 
-springdoc.api-docs.path=/api-docs
-
+## How to enter the db 
 ```
-
-## Change the driver to postgre 
-### application.properties
-```yaml
-spring.jpa.generate-ddl=true
-spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=jdbc:postgresql://localhost:5432/todo_list
-spring.datasource.username=
-spring.datasource.password=
-spring.datasource.driverClassName=org.postgresql.Driver
-
-springdoc.api-docs.path=/api-docs
-```
-
-### pom.xml 
-1. delete sql driver 
-```pom
-<dependency>
-   <groupId>com.mysql</groupId>
-   <artifactId>mysql-connector-j</artifactId>
-   <scope>runtime</scope>
-</dependency>
-```
-2. add postgresql  
-```pom
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <version>42.2.18</version> <!-- Replace with the latest version -->
-</dependency>
+database type: mysql
+port: 3307
+ac: root 
+pw: root
+database: todo_db
 ```
 
 ## How to get the api swagger doc
