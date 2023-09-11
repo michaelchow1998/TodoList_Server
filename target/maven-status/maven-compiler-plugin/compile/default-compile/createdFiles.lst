@@ -1,0 +1,12 @@
+com\example\todolist\dao\Todo.class
+com\example\todolist\exception\customException\TodoNotFoundException.class
+com\example\todolist\exception\customException\StatusNotMatchException.class
+com\example\todolist\dto\RequestTodoEditDto.class
+com\example\todolist\Enum\Status.class
+com\example\todolist\TodoController.class
+com\example\todolist\repo\TodoRepo.class
+com\example\todolist\exception\GlobalExceptionHandler.class
+com\example\todolist\dto\RequestTodoCreateDto.class
+com\example\todolist\TodoListApplication.class
+com\example\todolist\service\TodoService.class
+com\example\todolist\exception\ErrorDetails.class
