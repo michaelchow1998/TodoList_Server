@@ -6,6 +6,7 @@ import com.example.todolist.dao.Todo;
 import com.example.todolist.dto.RequestTodoCreateDto;
 import com.example.todolist.dto.RequestTodoEditDto;
 import com.example.todolist.exception.customException.TodoNotFoundException;
+import com.example.todolist.logger.ElasticLogger;
 import com.example.todolist.repo.TodoRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,19 +26,24 @@ public class TodoService {
 
     private TodoRepo todoRepo;
 
+    private ElasticLogger logger;
+
+
     @Autowired
-    public TodoService(TodoRepo todoRepo) {
+    public TodoService(TodoRepo todoRepo, ElasticLogger logger) {
         this.todoRepo = todoRepo;
+        this.logger = logger;
     }
+
 
     public void createTodo(RequestTodoCreateDto request){
         Date now = new Date();
-
         Todo todo = new Todo();
         todo.setMessage(request.getMessage());
         todo.setStatus(Status.PENDING);
         todo.setCreatedDate(now);
         todo.setModifyDate(now);
+        logger.sendElasticLog(todo.toString());
         todoRepo.save(todo);
 
     }
